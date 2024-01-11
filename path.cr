@@ -6,7 +6,10 @@ def find_todays_files(note_dir : String, date : String, ext : String) : Array(St
   todays_files 
 end
 
-# Path["~/bin"].expand(home: true) # => Path["/home/crystal/bin"]
+tmp = Time.utc(2016, 2, 15, 10, 20, 30)
+time = tmp.to_s # => "2016-02-15 10:20:30 UTC"
+
+puts time
 
 nb_dir = Path["~/.nb"].expand(home: true)
 
@@ -15,6 +18,13 @@ files = [] of String
 Dir.each_child(nb_dir) do |x|
     files << x
     puts "Got #{x}" # refuses . and .. as dir
+end
+
+# print file info
+files.each do | file |
+    info = File.info(file)
+    is_dir = info.directory?
+    puts "File: #{file} info #{is_dir}"
 end
 
 # lines = [] of String
